@@ -1,0 +1,20 @@
+# syntax=docker/dockerfile:1
+
+FROM python:3.11.6
+
+WORKDIR /gnnsurvival-pyg
+
+RUN apt update && apt install -y r-base r-base-dev
+
+RUN python3 -m pip install git+https://github.com/mdparkes/keggpathwaygraphs.git
+RUN python3 -m pip install git+https://github.com/mkazmier/torchmtlr
+
+COPY requirements.txt .
+
+RUN python3 -m pip install -r requirements.txt
+
+COPY . .
+
+RUN chmod u+x execute_experiment.sh
+
+ENTRYPOINT ["bash", "execute_experiment.sh"]

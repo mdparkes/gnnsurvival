@@ -1,0 +1,17 @@
+# Directories
+__pycache__/
+data/*
+experiment*/
+
+# Files
+.dockerignore
+.DS_Store
+.RData
+.Rhistory
+.Rproj.user
+
+# Exceptions
+!data/Pathway/
+!data/feature_map.csv
+!data/tcga_clin.csv
+

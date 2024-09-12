@@ -1,0 +1,23 @@
+# syntax=docker/dockerfile:1
+
+FROM python:3.11.6
+
+WORKDIR /gnnsurvival-pyg
+
+RUN python3 -m pip install git+https://github.com/mdparkes/keggpathwaygraphs.git
+RUN python3 -m pip install filelock~=3.12.4
+RUN python3 -m pip install numpy~=1.26.1
+RUN python3 -m pip install pandas~=2.1.1
+RUN python3 -m pip install torch~=2.1.0
+RUN python3 -m pip install torch_geometric~=2.4.0
+RUN python3 -m pip install tqdm~=4.66.1
+
+COPY prepare_data.sh .
+COPY data data/
+COPY src/create_csv_datasets.py src/
+COPY src/create_reactome_graph.py src/
+COPY src/custom_data_types.py src/
+
+RUN chmod u+x prepare_data.sh
+
+CMD ["bash", "prepare_data.sh"]
